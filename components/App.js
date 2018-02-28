@@ -27,40 +27,16 @@ App = React.createClass({
         const GIPHY_PUB_KEY = 'dc6zaTOxFJmzC';
         const url = GIPHY_API_URL + '/v1/gifs/random?api_key=' + GIPHY_PUB_KEY + '&tag=' + searchingText;
 
-        const promise = new Promise(
-            function(resolve, reject) {
-              const xhr = new XMLHttpRequest();
-              xhr.onload = function() {
-                if (this.status === 200) {
-                  var data = JSON.parse(xhr.responseText).data;
-                  var gif = {
-                    url: data.fixed_width_downsampled_url,
-                    sourceUrl: data.url
-                  };
-                  resolve(gif);
-                } else {
-                  reject(new Error(this.statusText));
-                }
-              };
-              xhr.onerror = function() {
-                reject(new Error(
-                  `XMLHttpRequest Error: ${this.statusText}`));
-              };
-              xhr.open('GET', url);
-              xhr.send();
-            });
-
-            return promise;
-
-  /*      fetch(url)
+        return fetch(url)
           .then(resp => resp.json())
           .then(resp => {
             let data = resp.data;
-            let gif = {
+
+            return {
               url: data.fixed_width_downsampled_url,
               sourceUrl: data.url
             };
-          }) */
+          })
 
   },
 
